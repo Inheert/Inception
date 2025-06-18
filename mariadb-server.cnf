@@ -1,0 +1,5 @@
+[mysqld]
+skip-networking
+
+[galera]
+bind-adress=0.0.0.0

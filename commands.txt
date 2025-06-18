@@ -1,0 +1,39 @@
+docker search NAME
+// Recherche les images disponible pour le service donne
+
+docker pull NAME
+// Telecharge l'image du service
+
+docker images
+// Liste les images disponible
+
+docker run --name NAME -e MYSQL_ROOT_PASSWORD=PASS -p 3306:3306 -d PATH
+// Cree un nouveau docker et le lance
+
+docker exec -it DOCKERNAME bash
+// Rentre a l'interieur du docker
+
+docker start DOCKERNAME
+// Lance un container existant
+
+docker stop DOCKERNAME
+// Stop le docker
+
+docker run IMAGENAME
+// lance un docker avec le nom de l'image, utiliser -it pour acceder au docker quand il est lance.
+
+docker rmi IMAGENAME
+// Supprime une image
+
+docker rm CONTAINERNAME
+// Supprime un container
+
+docker ps
+// Liste les dockers en cours d'execution
+
+docker system prune -a
+// Supprime les containers, les images, le cache etc...
+
+docker volume prune -a
+// Supprime la totalite des volumes utilise par aucun docker
+
