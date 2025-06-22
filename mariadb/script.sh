@@ -3,8 +3,8 @@
 service mariadb start
 
 echo | mariadb
-echo "CREATE USER IF NOT EXISTS '$db1_user'@'%' IDENTIFIED BY '$db1_pwd' ;" | mariadb
-echo "GRANT ALL PRIVILEGES ON $db1_name.* TO '$db1_user'@'%' ;" | mariadb
+echo "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PWD' ;" | mariadb
+echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' ;" | mariadb
 echo "FLUSH PRIVILEGES;" | mariadb
 
 kill $(cat /var/run/mysqld/mysqld.pid)
