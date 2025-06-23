@@ -7,11 +7,11 @@ volumes:
             device: /home/tclaereb/Documents/42/project/work/inception/data/wordpress
             o: bind
     database:
-        name: database
+        name: databae
         driver: local
         driver_opts:
             type: 'none'
-            device: /home/tclaereb/Documents/42/project/work/inception/data/database
+            device: /home/tclaereb/Documents/42/project/work/inception/data/mariadb
             o: bind
 
 services:
@@ -20,6 +20,8 @@ services:
         build: ./nginx
         restart: on-failure
         env_file: .env
+        volumes:
+          - wordpress:/var/www/html/
         depends_on:
             - wordpress
         ports:
