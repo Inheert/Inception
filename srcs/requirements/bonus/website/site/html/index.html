@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mon site statique</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="main_image">
+    <img src="images/calm_desert.png" alt="Calm Sea">
+  </div>
+
+  <div id="container">
+    <div id="captor"></div>
+
+    <div id="child_image">
+      <img src="images/calm_desert.png" alt="Calm Sea">
+    </div>
+
+    <svg id="circular_text" viewBox="0 0 200 200">
+      <defs>
+        <path id="circlePath"
+          d="M 100,100 m -90,0 a 90,90 0 1,1 180,0 a 90,90 0 1,1 -180,0" />
+      </defs>
+      <text fill="white" font-size="12" text-anchor="middle">
+        <textPath href="#circlePath" id="text_content" startOffset="50%">
+          She vanished between the waves, where silence remembers what the sky forgot.
+        </textPath>
+      </text>
+    </svg>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
