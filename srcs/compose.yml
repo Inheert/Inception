@@ -7,7 +7,7 @@ volumes:
             device: /home/tclaereb/Documents/42/project/work/inception/data/wordpress
             o: bind
     database:
-        name: databae
+        name: database
         driver: local
         driver_opts:
             type: 'none'
@@ -17,7 +17,7 @@ volumes:
 services:
     nginx:
         container_name: nginx
-        build: ./nginx
+        build: ./requirements/nginx
         restart: on-failure
         env_file: .env
         volumes:
@@ -30,7 +30,7 @@ services:
             - network
     mariadb:
         container_name: mariadb
-        build: ./mariadb
+        build: ./requirements/mariadb
         restart: unless-stopped
         env_file: .env
         volumes:
@@ -41,7 +41,7 @@ services:
             - 3306
     wordpress:
         container_name: wordpress
-        build: ./wordpress
+        build: ./requirements/wordpress
         restart: on-failure
         env_file: .env
         volumes:

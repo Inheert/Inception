@@ -6,13 +6,11 @@
 #    By: tclaereb <tclaereb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/22 16:51:57 by tclaereb          #+#    #+#              #
-#    Updated: 2025/06/23 16:55:09 by tclaereb         ###   ########.fr        #
+#    Updated: 2025/06/24 15:00:05 by tclaereb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-COMPOSE	:= docker-compose -f ./compose.yml
-ENV				:= ./.env
-VOLUMES_PATH	:= ./data
+COMPOSE	:= docker-compose -f ./srcs/compose.yml
 
 all: build run
 
