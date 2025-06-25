@@ -18,5 +18,6 @@ RUN chown -R www-data:www-data /var/www/html
 EXPOSE 4443
 EXPOSE 4444
 EXPOSE 4445
+EXPOSE 9443
 
 CMD [ "nginx", "-g", "daemon off;" ]

@@ -27,6 +27,13 @@ volumes:
             type: 'none'
             device: ../data/adminer
             o: bind
+    portainer_data:
+        name: portainer_data
+        driver: local
+        driver_opts:
+            type: 'none'
+            device: "../data/portainer_data"
+            o: bind
 
 services:
     nginx:
@@ -44,6 +51,7 @@ services:
             - "4443:443"
             - "4444:80"
             - "4445:8080"
+            - "9443:9443"
         networks:
             - network
     mariadb:
@@ -81,6 +89,15 @@ services:
         restart: on-failure
         volumes:
             - adminer:/var/www/html/
+        networks:
+            - network
+    portainer:
+        container_name: portainer
+        build: ./requirements/bonus/portainer
+        restart: on-failure
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - portainer_data:/data
         networks:
             - network
 
