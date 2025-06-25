@@ -1,4 +1,21 @@
 window.addEventListener("DOMContentLoaded", function() {
+	const captor = this.document.getElementById("captor");
+	const image = this.document.querySelector("#main_image img");
+	const textParent = this.document.getElementById("text_parent");
+	const text = this.document.getElementById("text_content");
+
+	captor.addEventListener("mouseenter", () => {
+		image.style.filter = "invert(0) blur(0vw)";
+		text.style.textShadow = "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white"
+		textParent.style.fill = "black";
+	})
+
+	captor.addEventListener("mouseleave", () => {
+		image.style.filter = "invert(1) blur(0.2vw)";
+		text.style.textShadow = "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black"
+		textParent.style.fill = "white";
+	})
+
 	const images = [
 		"images/calm_desert.png",
 		"images/calm_forest.png",
@@ -32,8 +49,6 @@ window.addEventListener("DOMContentLoaded", function() {
 	const randomTxt = textes[Math.floor(Math.random() * textes.length)];
 	const textPath = this.document.getElementById("text_content");
 	if (textPath) {
-		console.log("zerfgiop");
 		textPath.textContent = randomTxt;
 	}
-
 });

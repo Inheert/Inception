@@ -20,6 +20,13 @@ volumes:
             type: 'none'
             device: ../data/website
             o: bind
+    adminer:
+        name: adminer
+        driver: local
+        driver_opts:
+            type: 'none'
+            device: ../data/adminer
+            o: bind
 
 services:
     nginx:
@@ -30,11 +37,13 @@ services:
         volumes:
           - wordpress:/var/www/html/
           - website:/var/www/html/
+          - adminer:/var/www/html/
         depends_on:
             - wordpress
         ports:
             - "4443:443"
             - "4444:80"
+            - "4445:8080"
         networks:
             - network
     mariadb:
@@ -46,8 +55,6 @@ services:
             - database:/var/lib/mysql/
         networks:
             - network
-        expose:
-            - 3306
     wordpress:
         container_name: wordpress
         build: ./requirements/wordpress
@@ -66,6 +73,14 @@ services:
         # env_file: .env
         volumes:
             - website:/var/www/html/
+        networks:
+            - network
+    adminer:
+        container_name: adminer
+        build: ./requirements/bonus/adminer
+        restart: on-failure
+        volumes:
+            - adminer:/var/www/html/
         networks:
             - network
 

@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+}
+
+img {
+	transform: scale(1.1);
 }
 
 #main_image {
@@ -20,6 +26,8 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: invert(1) blur(0.2vw);
+  transition: filter 0.3s ease;
 }
 
 #container {
@@ -66,9 +74,14 @@ html, body {
   top: calc(-50vh + 10vw);
   left: calc(-50vw + 10vw);
   object-fit: cover;
-  transition-property: top, left;
+  filter: invert(1) blur(0.2vw);
+  transition-property: top, left, filter;
   transition-duration: 0.3s;
   transition-timing-function: ease;
+  transition:
+  	top 0.3s ease,
+  	left 0.3s ease,
+	filter 0.5s ease;
 }
 
 #circular_text {
@@ -86,11 +99,26 @@ html, body {
     transform 1s ease;
 }
 
+#text_parent {
+	fill: white;
+	transition: fill 0.5s ease;
+}
+
+#text_content {
+	font-family: "Dosis", sans-serif;
+	text-shadow:
+		-1px -1px 0 black,
+		1px -1px 0 black,
+		-1px  1px 0 black,
+		1px  1px 0 black;
+	transition: text-shadow 0.5s ease;
+}
+
 #captor:hover ~ #child_image {
   border: 0.2vw solid rgba(0,0,0,0);
   /* border-radius: 1%; */
-  width: 26vw;
   transform: rotate(0deg);
+  width: 26vw;
   height: 26vw;
 }
 
@@ -103,4 +131,5 @@ html, body {
 #captor:hover ~ #child_image img {
   top: calc(-50vh + 13vw);
   left: calc(-50vw + 13vw);
+  filter: invert(0) blur(0);
 }

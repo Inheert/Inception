@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: Théo <theoclaereboudt@gmail.com>           +#+  +:+       +#+         #
+#    By: tclaereb <tclaereb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/22 16:51:57 by tclaereb          #+#    #+#              #
-#    Updated: 2025/06/24 21:26:40 by Théo             ###   ########.fr        #
+#    Updated: 2025/06/25 16:28:23 by tclaereb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ COMPOSE	:= docker-compose -f ./srcs/compose.yml
 all: build run
 
 build: create_dir
-	$(COMPOSE) build $(SERVICES)
+	$(COMPOSE) build $(DOCK)
 
 run: create_dir
-	$(COMPOSE) up -d $(SERVICES)
+	$(COMPOSE) up -d $(DOCK)
 
 stop:
-	$(COMPOSE) down $(SERVICES)
+	$(COMPOSE) down $(DOCK)
 
 restart: stop all
 
@@ -45,6 +45,15 @@ create_dir:
 	@mkdir -p "${PWD}/data/wordpress"
 	@mkdir -p "${PWD}/data/mariadb"
 	@mkdir -p "${PWD}/data/website"
+	@mkdir -p "${PWD}/data/adminer"
 
+
+enter:
+	@if [ -n $(DOCK) ]; then \
+		$(COMPOSE) exec -it $(DOCK) bash; \
+	fi
+
+privileged:
+	@docker run --rm -it --privileged -v /home/tclaereb:/host ubuntu bash
 
 .PHONY: all build run down restart logs clean fclean create_dir

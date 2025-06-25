@@ -8,7 +8,7 @@ RUN apt-get update && \
     chown -R www-data:www-data /tmp/www/html
 
 COPY lighttpd.conf /etc/lighttpd/lighttpd.conf
-# COPY site/ /tmp/www/
+COPY site/ /tmp/www/
 COPY tools/script.sh /
 
 RUN chmod +x /script.sh
