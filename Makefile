@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: Théo <theoclaereboudt@gmail.com>           +#+  +:+       +#+         #
+#    By: tclaereb <tclaereb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/22 16:51:57 by tclaereb          #+#    #+#              #
-#    Updated: 2025/06/25 21:55:09 by Théo             ###   ########.fr        #
+#    Updated: 2025/06/26 14:35:42 by tclaereb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ create_dir:
 	@mkdir -p "${PWD}/data/mariadb"
 	@mkdir -p "${PWD}/data/website"
 	@mkdir -p "${PWD}/data/adminer"
-	@mkdir -p "${PWD}/data/portainer"
+	@mkdir -p "${PWD}/data/portainer_data"
 
 
 enter:
@@ -52,6 +52,6 @@ enter:
 	fi
 
 privileged:
-	@docker run --rm -it --privileged -v /home/inhhert:/host ubuntu bash
+	@docker run --rm -it --privileged -v /home/tclaereb:/host ubuntu bash
 
 .PHONY: all build run stop restart logs clean fclean re create_dir enter privileged
