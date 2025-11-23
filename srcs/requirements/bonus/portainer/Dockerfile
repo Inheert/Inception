@@ -7,7 +7,7 @@ RUN mkdir -p /tmp /data /opt/portainer && chmod -R 777 /data /tmp
 
 WORKDIR /opt/portainer
 
-RUN curl -L https://github.com/portainer/portainer/releases/download/2.27.8/portainer-2.27.8-linux-amd64.tar.gz \
+RUN curl -L https://github.com/portainer/portainer/releases/download/2.33.4/portainer-2.33.4-linux-amd64.tar.gz \
 	-o portainer.tar.gz && tar zxvf portainer.tar.gz --strip-components=1 && \
 	rm portainer.tar.gz && chmod +x portainer
 
