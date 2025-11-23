@@ -1,38 +1,38 @@
 volumes:
-    wordpress:
-        name: wordpress
+    v_wordpress:
+        name: v_wordpress
         driver: local
         driver_opts:
             type: 'none'
-            device: ../data/wordpress
+            device: ${VOLUME_PATH}/wordpress
             o: bind
-    database:
-        name: database
+    v_database:
+        name: v_database
         driver: local
         driver_opts:
             type: 'none'
-            device: ../data/mariadb
+            device: ${VOLUME_PATH}/mariadb
             o: bind
-    website:
-        name: website
+    v_website:
+        name: v_website
         driver: local
         driver_opts:
             type: 'none'
-            device: ../data/website
+            device: ${VOLUME_PATH}/website
             o: bind
-    adminer:
-        name: adminer
+    v_adminer:
+        name: v_adminer
         driver: local
         driver_opts:
             type: 'none'
-            device: ../data/adminer
+            device: ${VOLUME_PATH}/adminer
             o: bind
-    portainer_data:
-        name: portainer_data
+    v_portainer:
+        name: v_portainer
         driver: local
         driver_opts:
             type: 'none'
-            device: "../data/portainer_data"
+            device: "${VOLUME_PATH}/portainer"
             o: bind
 
 services:
@@ -42,9 +42,9 @@ services:
         restart: on-failure
         env_file: .env
         volumes:
-          - wordpress:/var/www/html/
-          - website:/var/www/html/
-          - adminer:/var/www/html/
+          - v_wordpress:/var/www/html/
+          - v_website:/var/www/html/
+          - v_adminer:/var/www/html/
         depends_on:
             - wordpress
         ports:
@@ -53,44 +53,56 @@ services:
             - "4445:8080"
             - "9443:9443"
         networks:
-            - network
+            - network-wordpress
+            - network-static-site
+            - network-adminer
+            - network-portainer
     mariadb:
         container_name: mariadb
         build: ./requirements/mariadb
         restart: unless-stopped
         env_file: .env
+        secrets:
+            - credentials
+            - db_password
+            - db_root_password
         volumes:
-            - database:/var/lib/mysql/
+            - v_database:/var/lib/mysql/
         networks:
-            - network
+            - network-ddb
     wordpress:
         container_name: wordpress
         build: ./requirements/wordpress
         restart: on-failure
         env_file: .env
+        secrets:
+            - credentials
+            - db_password
         volumes:
-            - wordpress:/var/www/html/
+            - v_wordpress:/var/www/html/
         depends_on:
             - mariadb
         networks:
-            - network
+            - network-wordpress
+            - network-ddb
     website:
         container_name: website
         build: ./requirements/bonus/website
         restart: on-failure
         # env_file: .env
         volumes:
-            - website:/var/www/html/
+            - v_website:/var/www/html/
         networks:
-            - network
+            - network-static-site
     adminer:
         container_name: adminer
         build: ./requirements/bonus/adminer
         restart: on-failure
         volumes:
-            - adminer:/var/www/html/
+            - v_adminer:/var/www/html/
         networks:
-            - network
+            - network-adminer
+            - network-ddb
     portainer:
         container_name: portainer
         build: ./requirements/bonus/portainer
@@ -99,11 +111,30 @@ services:
           - "4450:9443"
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-            - portainer_data:/data
+            - v_portainer:/data
         networks:
-            - network
+            - network-portainer
+            - network-wordpress
+            - network-ddb
+            - network-static-site
+            - network-adminer
 
 networks:
-    network:
+    network-wordpress:
+        driver: bridge
+    network-ddb:
+        driver: bridge
+    network-static-site:
+        driver: bridge
+    network-adminer:
+        driver: bridge
+    network-portainer:
         driver: bridge
 
+secrets:
+    credentials:
+        file: ../secrets/credentials.txt
+    db_password:
+        file: ../secrets/db_password.txt
+    db_root_password:
+        file: ../secrets/db_root_password.txt

@@ -6,7 +6,7 @@
 #    By: tclaereb <tclaereb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/22 16:51:57 by tclaereb          #+#    #+#              #
-#    Updated: 2025/06/26 14:35:42 by tclaereb         ###   ########.fr        #
+#    Updated: 2025/11/23 15:02:06 by tclaereb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,9 @@ restart: stop all
 logs:
 	$(COMPOSE) logs -f $(DOCK)
 
+test:
+	env
+
 clean:
 	@echo "Useless instruction, please refer to stop, restart or fclean."
 
@@ -39,12 +42,12 @@ fclean: stop
 re: fclean all
 
 create_dir:
-	@mkdir -p "${PWD}/data/wordpress"
-	@mkdir -p "${PWD}/data/mariadb"
-	@mkdir -p "${PWD}/data/website"
-	@mkdir -p "${PWD}/data/adminer"
-	@mkdir -p "${PWD}/data/portainer_data"
-
+	@sh -c 'mkdir -p "$$(grep "^VOLUME_PATH=" srcs/.env | cut -d "=" -f2-)"'
+	@sh -c 'mkdir -p "$$(grep "^VOLUME_PATH=" srcs/.env | cut -d "=" -f2-)/wordpress"'
+	@sh -c 'mkdir -p "$$(grep "^VOLUME_PATH=" srcs/.env | cut -d "=" -f2-)/mariadb"'
+	@sh -c 'mkdir -p "$$(grep "^VOLUME_PATH=" srcs/.env | cut -d "=" -f2-)/website"'
+	@sh -c 'mkdir -p "$$(grep "^VOLUME_PATH=" srcs/.env | cut -d "=" -f2-)/adminer"'
+	@sh -c 'mkdir -p "$$(grep "^VOLUME_PATH=" srcs/.env | cut -d "=" -f2-)/portainer"'
 
 enter:
 	@if [ -n $(DOCK) ]; then \
