@@ -6,11 +6,11 @@
 #    By: tclaereb <tclaereb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/22 16:51:57 by tclaereb          #+#    #+#              #
-#    Updated: 2025/11/23 15:02:06 by tclaereb         ###   ########.fr        #
+#    Updated: 2025/11/23 15:22:23 by tclaereb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-COMPOSE	:= docker-compose -f ./srcs/compose.yml
+COMPOSE	:= docker compose -f ./srcs/compose.yml
 
 all: build run
 
@@ -35,7 +35,7 @@ clean:
 	@echo "Useless instruction, please refer to stop, restart or fclean."
 
 fclean: stop
-	@docker-compose rm -f -s -v 2>/dev/null || true
+	@docker compose rm -f -s -v 2>/dev/null || true
 	@docker volume rm -f $$(docker volume ls -q) 2>/dev/null || true
 	@docker system prune -a -f || true
 
