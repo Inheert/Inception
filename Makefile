@@ -6,7 +6,7 @@
 #    By: tclaereb <tclaereb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/22 16:51:57 by tclaereb          #+#    #+#              #
-#    Updated: 2025/11/23 15:22:23 by tclaereb         ###   ########.fr        #
+#    Updated: 2025/11/24 19:24:57 by tclaereb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,10 @@ enter:
 		$(COMPOSE) exec -it $(DOCK) bash; \
 	fi
 
+ps:
+	$(COMPOSE) ps
+
 privileged:
 	@docker run --rm -it --privileged -v /home/tclaereb:/host ubuntu bash
 
-.PHONY: all build run stop restart logs clean fclean re create_dir enter privileged
+.PHONY: all build run stop restart logs clean fclean re create_dir enter ps privileged

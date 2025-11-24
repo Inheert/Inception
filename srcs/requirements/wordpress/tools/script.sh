@@ -9,7 +9,7 @@ fi
 
 cd "$WP_PATH" || exit 1
 
-until mariadb -h"$DB_HOST" -u"$DB_USER" -p"$DB_PWD" -e "SELECT 1;" > /dev/null 2>&1; do
+until mariadb -h"$DB_HOST" -u"$DB_USER_NAME" -p"$DB_USER_PWD" -e "SELECT 1;" > /dev/null 2>&1; do
     echo "⏳ Waiting MariaDB on $DB_HOST..."
     sleep 2
 done
@@ -21,8 +21,8 @@ else
 
     wp config create --allow-root \
         --dbname="$DB_NAME" \
-        --dbuser="$DB_USER" \
-        --dbpass="$DB_PWD" \
+        --dbuser="$DB_USER_NAME" \
+        --dbpass="$DB_USER_PWD" \
         --dbhost="$DB_HOST" \
         --path="$WP_PATH"
 
@@ -31,14 +31,14 @@ else
     wp core install --allow-root \
         --url="$DOMAIN_NAME" \
         --title="$WP_TITLE" \
-        --admin_user="$WP_ADMIN" \
+        --admin_user="$WP_ADMIN_NAME" \
         --admin_password="$WP_ADMIN_PWD" \
         --admin_email="$WP_ADMIN_EMAIL" \
         --path="$WP_PATH"
 
     wp plugin update --allow-root --all --path="$WP_PATH"
 
-    wp user create --allow-root "$WP_USER" "$WP_USER_EMAIL" \
+    wp user create --allow-root "$WP_USER_NAME" "$WP_USER_EMAIL" \
         --user_pass="$WP_USER_PWD" --role=author --porcelain \
         --path="$WP_PATH"
 fi
