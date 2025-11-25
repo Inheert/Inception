@@ -43,4 +43,8 @@ else
         --path="$WP_PATH"
 fi
 
+sed -i "/^\/\* That's all, stop editing/ i define('WP_HOME', 'https://tclaereb.42.fr');" /var/www/html/wp-config.php
+sed -i "/^\/\* That's all, stop editing/ i define('WP_SITEURL', 'https://tclaereb.42.fr');" /var/www/html/wp-config.php
+
+
 php-fpm8.2 -F
