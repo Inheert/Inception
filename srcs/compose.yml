@@ -43,8 +43,8 @@ services:
         env_file: .env
         volumes:
           - v_wordpress:/var/www/html/
-          - v_website:/var/www/html/
-          - v_adminer:/var/www/html/
+          - v_website:/var/www/website/
+          - v_adminer:/var/www/adminer/
         depends_on:
             - wordpress
         ports:
@@ -84,7 +84,7 @@ services:
         restart: on-failure
         # env_file: .env
         volumes:
-            - v_website:/var/www/html/
+            - v_website:/var/www/website/
         networks:
             - network-static-site
     adminer:
@@ -92,7 +92,7 @@ services:
         build: ./requirements/bonus/adminer
         restart: on-failure
         volumes:
-            - v_adminer:/var/www/html/
+            - v_adminer:/var/www/adminer/
         networks:
             - network-adminer
             - network-ddb
