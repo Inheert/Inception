@@ -9,9 +9,6 @@ RUN chmod +x /usr/local/bin/wp
 RUN mkdir -p /var/www/html
 RUN chown -R root:root /var/www/html
 
-RUN sed -i 's/listen = 127.0.0.1:9000/listen = 0.0.0.0:9000/g' /etc/php83/php-fpm.d/www.conf && \
-    sed -i 's/;listen.mode = 0660/listen.mode = 0660/g' /etc/php83/php-fpm.d/www.conf
-
 COPY tools/script.sh /
 COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
