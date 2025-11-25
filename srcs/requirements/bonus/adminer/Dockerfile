@@ -1,8 +1,8 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 # Installer PHP et les extensions nécessaires
 RUN apt-get update && apt-get install -y && \
-	apt-get install -y wget php7.4 php-fpm php-mysql && \
+	apt-get install -y wget php8.2 php-fpm php-mysql && \
 	mkdir -p /var/www/html && \
 	chown -R www-data:www-data /var/www/html
 

@@ -16,8 +16,6 @@ fi
 mysqld_safe --user=mysql &
 pid="$!"
 
-# Pour attendre MariaDB, on utilise root SANS mot de passe si fresh install,
-# sinon on utilise le mot de passe défini via DB_ROOT_PWD.
 ROOT_AUTH_ARGS=( -u root )
 
 if [ "$FRESH_INSTALL" -eq 0 ] && [ -n "$DB_ROOT_PWD" ]; then
@@ -30,14 +28,12 @@ until mariadb "${ROOT_AUTH_ARGS[@]}" -e "SELECT 1" &>/dev/null; do
 done
 echo "MariaDB is up."
 
-# Si fresh install et mot de passe root demandé, on le configure maintenant
 if [ "$FRESH_INSTALL" -eq 1 ] && [ -n "$DB_ROOT_PWD" ]; then
     echo "Setting root password..."
     mariadb -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PWD}'; FLUSH PRIVILEGES;"
     ROOT_AUTH_ARGS=( -u root "-p${DB_ROOT_PWD}" )
 fi
 
-# Création BDD + user si demandé
 if [ -n "$DB_USER_NAME" ] && [ -n "$DB_USER_PWD" ] && [ -n "$DB_NAME" ]; then
     echo "Creating database ${DB_NAME} and user ${DB_USER_NAME}..."
     mariadb "${ROOT_AUTH_ARGS[@]}" -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"
@@ -45,10 +41,7 @@ if [ -n "$DB_USER_NAME" ] && [ -n "$DB_USER_PWD" ] && [ -n "$DB_NAME" ]; then
     mariadb "${ROOT_AUTH_ARGS[@]}" -e "GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER_NAME}'@'%'; FLUSH PRIVILEGES;"
 fi
 
-# On arrête proprement le mysqld lancé pour l'init
-echo "Stopping temporary MariaDB instance..."
 mysqladmin "${ROOT_AUTH_ARGS[@]}" shutdown
 
-# On relance MariaDB en foreground comme process principal du container
 echo "Starting MariaDB in foreground..."
 exec mysqld_safe --user=mysql

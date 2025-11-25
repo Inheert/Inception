@@ -43,4 +43,4 @@ else
         --path="$WP_PATH"
 fi
 
-php-fpm7.4 -F
+php-fpm8.2 -F
